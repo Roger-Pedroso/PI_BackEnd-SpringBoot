@@ -4,8 +4,8 @@
  */
 package com.pratti.pesquisa.controller;
 
-import com.pratti.pesquisa.repository.UserRepository;
-import com.pratti.pesquisa.model.User;
+import com.pratti.pesquisa.model.Administrador;
+import com.pratti.pesquisa.repository.AdministradorRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,17 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin("http://localhost:3000")
-public class UserController {
+public class AdministradorController {
     @Autowired
-    private UserRepository userRepository;
+    private AdministradorRepository userRepository;
     
-    @PostMapping("/user")
-    User newUser(@RequestBody User newUser){
-        return userRepository.save(newUser);
+    @PostMapping("/adm")
+    Administrador newAdm(@RequestBody Administrador newAdm){
+        return userRepository.save(newAdm);
     }
     
-    @GetMapping("/users")
-    List<User> getAllUsers(){
+    @GetMapping("/adm")
+    List<Administrador> getAllAdms(){
         return userRepository.findAll();
     }
 }

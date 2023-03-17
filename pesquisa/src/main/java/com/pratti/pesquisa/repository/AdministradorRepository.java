@@ -5,12 +5,12 @@
 package com.pratti.pesquisa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.pratti.pesquisa.model.User;
+import com.pratti.pesquisa.model.Administrador;
 
 /**
  *
  * @author Roger
  */
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface AdministradorRepository extends JpaRepository<Administrador, Long>{
     
 }
