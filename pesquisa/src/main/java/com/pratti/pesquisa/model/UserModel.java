@@ -4,10 +4,15 @@
  */
 package com.pratti.pesquisa.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 
 /**
@@ -15,39 +20,32 @@ import java.util.Date;
  * @author Roger
  */
 @Entity
-public class Administrador {
+@Table(name = "user")
+public class UserModel implements Serializable {
+    private static final Long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    @Column(nullable = false)
     private String nome;
-    private String email;
+    @Column(nullable = false)
     private String cracha;
+    @Column(nullable = false)
     private Date nascimento;
+    @Column(nullable = false)
+    private String email;
+    @Column(nullable = false)
     private String ramal;
+    @Column(nullable = false)
+    public String senha;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-    
-     public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getCracha() {
@@ -57,7 +55,7 @@ public class Administrador {
     public void setCracha(String cracha) {
         this.cracha = cracha;
     }
-    
+
     public Date getNascimento() {
         return nascimento;
     }
@@ -65,7 +63,7 @@ public class Administrador {
     public void setNascimento(Date nascimento) {
         this.nascimento = nascimento;
     }
-    
+
     public String getRamal() {
         return ramal;
     }
@@ -73,4 +71,30 @@ public class Administrador {
     public void setRamal(String ramal) {
         this.ramal = ramal;
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
 }
