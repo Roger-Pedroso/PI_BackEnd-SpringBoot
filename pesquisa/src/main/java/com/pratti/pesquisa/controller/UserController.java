@@ -4,13 +4,25 @@
  */
 package com.pratti.pesquisa.controller;
 
-import com.pratti.pesquisa.repository.UserRepository;
-import com.pratti.pesquisa.model.User;
+import com.pratti.pesquisa.dtos.LoginDto;
+import com.pratti.pesquisa.dtos.UserDto;
+import com.pratti.pesquisa.model.UserModel;
+import com.pratti.pesquisa.service.LoginMessage;
+import com.pratti.pesquisa.service.UserService;
+
+
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Optional;
+import java.util.UUID;
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,18 +31,81 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Roger
  */
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
-    @Autowired
-    private UserRepository userRepository;
+    final UserService userService;
     
-    @PostMapping("/user")
-    User newUser(@RequestBody User newUser){
-        return userRepository.save(newUser);
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
     
-    @GetMapping("/users")
-    List<User> getAllUsers(){
-        return userRepository.findAll();
+    @PostMapping("/user")
+    public ResponseEntity<Object> saveUser(@RequestBody @Validated UserDto userDto){
+        if(userService.existsByCracha(userDto.getCracha())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Cracha is already in use");
+        }
+        
+        var userModel = new UserModel();
+        BeanUtils.copyProperties(userDto, userModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userModel));
+    }
+    
+    
+    @GetMapping("/user")
+    public ResponseEntity<List<UserModel>> getAllUsers(){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
+    }
+    
+    @GetMapping("/user/{id}")
+    public ResponseEntity<Object> getOneUser(@PathVariable(value= "id") UUID id){
+        Optional<UserModel> userModelOptional = userService.findById(id);
+        if(!userModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        
+        return ResponseEntity.status(HttpStatus.OK).body(userModelOptional.get());
+    }
+    
+    @PutMapping("/user/{id}")
+    public ResponseEntity<Object> updateUser(@PathVariable(value ="id") UUID id, @RequestBody @Validated UserDto userDto){
+        Optional<UserModel> userModelOptional = userService.findById(id);
+        if(!userModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        
+        var userModel = userModelOptional.get();
+        
+        if(userDto.getCracha() != null){
+            userModel.setCracha(userDto.getCracha());
+        }
+        
+        if (userDto.getEmail() != null) {
+            userModel.setEmail(userDto.getEmail());
+        }
+        
+        if (userDto.getNascimento() != null) {
+            userModel.setNascimento(userDto.getNascimento());
+        }
+        
+        if (userDto.getNome() != null) {
+            userModel.setNome(userDto.getNome());
+        }
+       
+        if (userDto.getRamal() != null) {
+            userModel.setRamal(userDto.getRamal());
+        }
+        
+        if(userDto.getSenha() != null) {
+            userModel.setSenha(userDto.getSenha());
+        }
+        
+        return ResponseEntity.status(HttpStatus.OK).body(userService.save(userModel));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody LoginDto loginDto){
+        LoginMessage loginMessage = userService.loginMessage(loginDto);
+
+        return ResponseEntity.ok(loginMessage);
     }
 }

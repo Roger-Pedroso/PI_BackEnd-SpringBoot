@@ -4,18 +4,14 @@
  */
 package com.pratti.pesquisa.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.pratti.pesquisa.model.UserModel;
-
-import java.util.Optional;
+import com.pratti.pesquisa.model.SuperiorModel;
 import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Roger
  */
-public interface UserRepository extends JpaRepository<UserModel, UUID>{
+public interface SuperiorRepository extends JpaRepository<SuperiorModel, UUID>{
     boolean existsByCracha(String cracha);
-    Optional<UserModel> findByCracha(String cracha);
-    Optional<UserModel> findOneByCrachaAndSenha(String cracha, String senha);
 }
