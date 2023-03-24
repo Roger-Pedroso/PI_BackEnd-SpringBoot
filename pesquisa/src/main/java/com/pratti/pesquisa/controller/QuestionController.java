@@ -77,6 +77,14 @@ public class QuestionController {
         if (questionDto.getTipo()!= null) {
             questionModel.setTipo(questionDto.getTipo());
         }
+        
+         if(questionDto.getNome_campo()!= null){
+            questionModel.setNome_campo(questionDto.getNome_campo());
+        }
+        
+        if (questionDto.getObrigatorio()!= null) {
+            questionModel.setObrigatorio(questionDto.getObrigatorio());
+        }
 
         
         return ResponseEntity.status(HttpStatus.OK).body(questionService.save(questionModel));

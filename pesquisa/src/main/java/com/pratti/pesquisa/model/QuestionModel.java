@@ -25,9 +25,13 @@ public class QuestionModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @Column(nullable = false)
+    private String nome_campo;
+    @Column(nullable = false)
     private String descricao;
     @Column(nullable = false)
     private String tipo;
+    @Column(nullable = false)
+    private boolean obrigatorio;
 
     public UUID getId() {
         return id;
@@ -51,6 +55,22 @@ public class QuestionModel {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getNome_campo() {
+        return nome_campo;
+    }
+
+    public void setNome_campo(String nome_campo) {
+        this.nome_campo = nome_campo;
+    }
+
+    public boolean isObrigatorio() {
+        return obrigatorio;
+    }
+
+    public void setObrigatorio(boolean obrigatorio) {
+        this.obrigatorio = obrigatorio;
     }
     
     
