@@ -4,15 +4,16 @@
  */
 package com.pratti.pesquisa.controller;
 
-import com.pratti.pesquisa.dtos.SuperiorDto;
-import com.pratti.pesquisa.model.SuperiorModel;
-import com.pratti.pesquisa.service.SuperiorService;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import com.pratti.pesquisa.dtos.SuperiorDto;
+import com.pratti.pesquisa.model.SectorModel;
+import com.pratti.pesquisa.model.SuperiorModel;
+import com.pratti.pesquisa.service.SuperiorService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +58,10 @@ public class SuperiorController {
         }
         
         var superiorModel = new SuperiorModel();
+        var sectorModel = new SectorModel();
+        sectorModel.setId(superiorDto.getIdSector());
+        superiorModel.setSector(sectorModel);
+  
         BeanUtils.copyProperties(superiorDto, superiorModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(superiorService.save(superiorModel));
     }

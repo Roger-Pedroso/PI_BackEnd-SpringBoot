@@ -4,6 +4,9 @@
  */
 package com.pratti.pesquisa.dtos;
 
+import com.pratti.pesquisa.model.SectorModel;
+import java.util.UUID;
+
 /**
  *
  * @author Roger
@@ -13,6 +16,15 @@ public class SuperiorDto {
     private String cargo;
     private String cracha;
     private String email;
+    private UUID idSector;
+
+    public UUID getIdSector() {
+        return idSector;
+    }
+
+    public void setIdSector(UUID idSector) {
+        this.idSector = idSector;
+    }
 
     public String getNome() {
         return nome;

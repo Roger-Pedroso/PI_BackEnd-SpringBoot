@@ -39,4 +39,6 @@ public class SuperiorService {
         
         return superiorRepository.save(superiorModel);
     }
+
+
 }

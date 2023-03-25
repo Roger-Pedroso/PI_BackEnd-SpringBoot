@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
 
@@ -32,6 +34,18 @@ public class SuperiorModel {
     private String cracha;
     @Column(nullable = false)
     private String email;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_sector")
+    private SectorModel sector;
+
+    public SectorModel getSector() {
+        return sector;
+    }
+
+    public void setSector(SectorModel sector) {
+        this.sector = sector;
+    }
 
     public UUID getId() {
         return id;
