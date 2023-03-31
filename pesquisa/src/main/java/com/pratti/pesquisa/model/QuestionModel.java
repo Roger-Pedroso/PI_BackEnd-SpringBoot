@@ -9,7 +9,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -32,6 +35,9 @@ public class QuestionModel {
     private String tipo;
     @Column(nullable = false)
     private boolean obrigatorio;
+    
+    @ManyToMany(mappedBy = "question")
+    private Set<QuizModel> quiz = new HashSet<>();
 
     public UUID getId() {
         return id;
