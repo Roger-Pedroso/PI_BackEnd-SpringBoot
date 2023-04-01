@@ -5,26 +5,29 @@ import java.util.UUID;
 public class LoginDto {
     
     private UUID id;
-    private String cracha;
+    private String email;
     private String senha;
 
     public UUID getId() {
         return id;
     }
-    public String getCracha() {
-        return cracha;
+
+    public String getEmail() {
+        return email;
     }
-    public void setCracha(String cracha) {
-        this.cracha = cracha;
+
+    public void setEmail(String email) {
+        this.email = email;
     }
+    
     public String getSenha() {
         return senha;
     }
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    public LoginDto(String cracha, String senha) {
-        this.cracha = cracha;
+    public LoginDto(String email, String senha) {
+        this.email = email;
         this.senha = senha;
     }
 

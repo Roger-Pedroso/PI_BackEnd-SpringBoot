@@ -102,7 +102,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.save(userModel));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login/adm")
     public ResponseEntity<?> loginUser(@RequestBody LoginDto loginDto){
         LoginMessage loginMessage = userService.loginMessage(loginDto);
 
