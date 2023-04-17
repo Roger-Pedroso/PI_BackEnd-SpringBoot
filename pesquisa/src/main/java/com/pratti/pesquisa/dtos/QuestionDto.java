@@ -13,6 +13,7 @@ public class QuestionDto {
     private String tipo;
     private Boolean obrigatorio;
     private String nome_campo;
+    private String alternativas;
 
     public String getDescricao() {
         return descricao;
@@ -45,6 +46,14 @@ public class QuestionDto {
     public void setObrigatorio(Boolean obrigatorio) {
         this.obrigatorio = obrigatorio;
     }
+    
+    public String getAlternativas() {
+        return alternativas;
+    }
 
+    public void setAlternativas(String alternativas) {
+        this.alternativas = alternativas;
+    }
+    
     
 }

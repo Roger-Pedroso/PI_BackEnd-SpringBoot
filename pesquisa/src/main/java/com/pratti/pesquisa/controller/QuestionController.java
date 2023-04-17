@@ -85,6 +85,10 @@ public class QuestionController {
         if (questionDto.getObrigatorio()!= null) {
             questionModel.setObrigatorio(questionDto.getObrigatorio());
         }
+        
+        if (questionDto.getAlternativas()!= null) {
+            questionModel.setAlternativas(questionDto.getAlternativas());
+        }
 
         
         return ResponseEntity.status(HttpStatus.OK).body(questionService.save(questionModel));

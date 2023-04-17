@@ -29,12 +29,14 @@ public class QuestionModel {
     private UUID id;
     @Column(nullable = false)
     private String nome_campo;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String descricao;
     @Column(nullable = false)
     private String tipo;
     @Column(nullable = false)
     private boolean obrigatorio;
+    @Column(nullable = true)
+    private String alternativas;
     
     @ManyToMany(mappedBy = "question")
     private Set<QuizModel> quiz = new HashSet<>();
@@ -77,6 +79,14 @@ public class QuestionModel {
 
     public void setObrigatorio(boolean obrigatorio) {
         this.obrigatorio = obrigatorio;
+    }
+
+    public String getAlternativas() {
+        return alternativas;
+    }
+
+    public void setAlternativas(String alternativas) {
+        this.alternativas = alternativas;
     }
     
     
