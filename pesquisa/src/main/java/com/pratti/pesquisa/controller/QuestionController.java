@@ -51,18 +51,14 @@ public class QuestionController {
     }
     
     @PostMapping("/question")
-    public ResponseEntity<Object> saveSuperior(@RequestBody @Validated QuestionDto questionDto){
-        if(questionService.existsByDescricao(questionDto.getDescricao())){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Question is already in use");
-        }
-        
+    public ResponseEntity<Object> saveQuestion(@RequestBody @Validated QuestionDto questionDto){       
         var questionModel = new QuestionModel();
         BeanUtils.copyProperties(questionDto, questionModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(questionService.save(questionModel));
     }
     
     @PutMapping("/question/{id}")
-    public ResponseEntity<Object> updateSector(@PathVariable(value ="id") UUID id, @RequestBody @Validated QuestionDto questionDto){
+    public ResponseEntity<Object> updateQuestion(@PathVariable(value ="id") UUID id, @RequestBody @Validated QuestionDto questionDto){
         Optional<QuestionModel> questionModelOptional = questionService.findById(id);
         if(!questionModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Question not found");

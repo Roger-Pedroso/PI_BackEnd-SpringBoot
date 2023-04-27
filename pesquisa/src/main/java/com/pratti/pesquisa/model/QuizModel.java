@@ -42,32 +42,11 @@ public class QuizModel {
         joinColumns = @JoinColumn(name = "id_questionario"),
         inverseJoinColumns = @JoinColumn(name = "id_questao"))
     private Set<QuestionModel> question = new HashSet<>();
-
-    @ManyToOne
-    @JoinColumn(name = "id_superior")
-    private SuperiorModel superior;
     
     @ManyToOne
     @JoinColumn(name = "id_user")
     private UserModel user;
-
-    public SuperiorModel getSuperior() {
-        return superior;
-    }
-
-    public void setSuperior(SuperiorModel superior) {
-        this.superior = superior;
-    }
-
-    public SectorModel getSector() {
-        return sector;
-    }
-
-    public void setSector(SectorModel sector) {
-        this.sector = sector;
-    }
     
-    private SectorModel sector;
     public Set<QuestionModel> getQuestion() {
         return question;
     }
