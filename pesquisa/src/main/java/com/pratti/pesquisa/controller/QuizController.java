@@ -8,9 +8,13 @@ import com.pratti.pesquisa.dtos.QuestionDto;
 import com.pratti.pesquisa.dtos.QuizDto;
 import com.pratti.pesquisa.model.QuestionModel;
 import com.pratti.pesquisa.model.QuizModel;
+import com.pratti.pesquisa.service.QuestionService;
 import com.pratti.pesquisa.service.QuizService;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -32,9 +36,11 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class QuizController { 
     final QuizService quizService;
+    final QuestionService questionService;
     
-    public QuizController(QuizService quizService) {
+    public QuizController(QuizService quizService, QuestionService questionService) {
         this.quizService = quizService;
+        this.questionService = questionService; 
     }
 
     @GetMapping("/quiz")
@@ -57,9 +63,27 @@ public class QuizController {
         if(quizService.existsByDescricao(quizDto.getNome())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Quiz is already in use");
         }
-        
+
         var quizModel = new QuizModel();
-        BeanUtils.copyProperties(quizDto, quizModel);
+
+        Set<QuestionModel> questions = new HashSet<>();
+        for (UUID questionId : quizDto.getQuestions()) {
+            Optional<QuestionModel> optionalQuestion = questionService.findById(questionId);
+            if (optionalQuestion.isPresent()) {
+                questions.add(optionalQuestion.get());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }
+
+        // Define as questões no questionário
+        quizModel.setNome(quizDto.getNome());
+        quizModel.setDescricao(quizDto.getDescricao());
+        quizModel.setQuestions(questions);
+        
+    
+        
+
         return ResponseEntity.status(HttpStatus.CREATED).body(quizService.save(quizModel));
     }
     
@@ -80,9 +104,9 @@ public class QuizController {
             quizModel.setNome(quizDto.getNome());
         }
         
-        if (quizDto.getQuestion()!= null) {
-            quizModel.setQuestion(quizDto.getQuestion());
-        }
+        // if (quizDto.getQuestions()!= null) {
+        //     quizModel.setQuestions(quizDto.getQuestions());
+        // }
         
         return ResponseEntity.status(HttpStatus.OK).body(quizService.save(quizModel));
     }

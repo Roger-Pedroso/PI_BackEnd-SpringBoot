@@ -36,7 +36,7 @@ public class QuizService {
     }
     
     public QuizModel save(QuizModel quizModel){
-        
+        /*return entityManager.merge(questionModel);*/
         return quizRepository.save(quizModel);
     }
 }

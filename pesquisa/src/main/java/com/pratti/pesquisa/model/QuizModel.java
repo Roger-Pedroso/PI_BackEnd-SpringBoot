@@ -4,9 +4,11 @@
  */
 package com.pratti.pesquisa.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,6 +17,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -36,23 +39,26 @@ public class QuizModel {
     @Column(nullable = false)
     private String descricao;
     
-    @ManyToMany(cascade = CascadeType.ALL)
+    @NotNull
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
-        name = "QuestaoQuestionario",
-        joinColumns = @JoinColumn(name = "id_questionario"),
-        inverseJoinColumns = @JoinColumn(name = "id_questao"))
-    private Set<QuestionModel> question = new HashSet<>();
+            name = "QuestaoQuestionario",
+            joinColumns = @JoinColumn(name = "id_questionario", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_questao", referencedColumnName = "id"))
+    @Column(nullable = false)
+    @JsonManagedReference
+    private Set<QuestionModel> questions = new HashSet<>();
     
     @ManyToOne
     @JoinColumn(name = "id_user")
     private UserModel user;
-    
-    public Set<QuestionModel> getQuestion() {
-        return question;
+
+    public Set<QuestionModel> getQuestions() {
+        return questions;
     }
 
-    public void setQuestion(Set<QuestionModel> question) {
-        this.question = question;
+    public void setQuestions(Set<QuestionModel> questions) {
+        this.questions = questions;
     }
 
     public UUID getId() {

@@ -4,6 +4,7 @@
  */
 package com.pratti.pesquisa.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,7 +39,8 @@ public class QuestionModel {
     @Column(nullable = true)
     private String alternativas;
     
-    @ManyToMany(mappedBy = "question")
+    @ManyToMany(mappedBy = "questions")
+    @JsonBackReference
     private Set<QuizModel> quiz = new HashSet<>();
 
     public UUID getId() {
@@ -87,6 +89,14 @@ public class QuestionModel {
 
     public void setAlternativas(String alternativas) {
         this.alternativas = alternativas;
+    }
+
+    public Set<QuizModel> getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Set<QuizModel> quiz) {
+        this.quiz = quiz;
     }
     
     

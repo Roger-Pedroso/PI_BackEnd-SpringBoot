@@ -5,7 +5,6 @@
 package com.pratti.pesquisa.service;
 
 import com.pratti.pesquisa.model.QuestionModel;
-import com.pratti.pesquisa.model.SectorModel;
 import com.pratti.pesquisa.repository.QuestionRepository;
 import java.util.List;
 import java.util.Optional;

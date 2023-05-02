@@ -5,6 +5,7 @@
 package com.pratti.pesquisa.dtos;
 
 import com.pratti.pesquisa.model.QuestionModel;
+import com.pratti.pesquisa.model.QuizModel;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -16,7 +17,7 @@ import java.util.UUID;
 public class QuizDto {
     private String nome;
     private String descricao;
-    private Set<QuestionModel> question = new HashSet<>();
+    private Set<UUID> questions;
 
     public String getNome() {
         return nome;
@@ -34,13 +35,32 @@ public class QuizDto {
         this.descricao = descricao;
     }
 
-    public Set<QuestionModel> getQuestion() {
-        return question;
+    public Set<UUID> getQuestions() {
+        return questions;
     }
 
-    public void setQuestion(Set<QuestionModel> question) {
-        this.question = question;
+    public void setQuestions(Set<UUID> questions) {
+        this.questions = questions;
+    }
+
+    public QuizDto(String nome, String descricao, Set<UUID> questions) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.questions = questions;
     }
     
-    
+    // Método para converter de QuestionarioDTO para Questionario
+    public QuizModel toQuiz() {
+        QuizModel quiz = new QuizModel();
+        quiz.setNome(this.getNome());
+        quiz.setDescricao(this.getDescricao());
+        Set<QuestionModel> questions = new HashSet<>();
+        for (UUID questionId : this.getQuestions()) {
+            QuestionModel questionModel = new QuestionModel();
+            questionModel.setId(questionId);
+            questions.add(questionModel);
+        }
+        quiz.setQuestions(questions);
+        return quiz;
+    }
 }
