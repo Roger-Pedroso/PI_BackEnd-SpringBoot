@@ -88,7 +88,7 @@ public class UserService {
             if(senhaCorreta){
                 Optional<UserModel> userModel2 = userRepository.findOneByEmailAndSenha(loginDto.getEmail(), userModel1.get().getSenha());
                 if(userModel2.isPresent()){
-                    return new LoginMessage("Logado com Sucesso", true);
+                    return new LoginMessage("Logado com Sucesso", true, userModel2.get().getId().toString());
                 }else {
                     return new LoginMessage("Falha ao Logar", false);
                 }
