@@ -32,7 +32,19 @@ public class AnswerModel {
     @ManyToOne
     @JoinColumn(name = "id_question")
     private QuestionModel question;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_quiz")
+    private QuizModel quiz;
 
+    public QuizModel getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(QuizModel quiz) {
+        this.quiz = quiz;
+    }
+    
     public QuestionModel getQuestion() {
         return question;
     }
