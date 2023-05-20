@@ -6,6 +6,9 @@ package com.pratti.pesquisa.controller;
 
 import com.pratti.pesquisa.dtos.KeyDto;
 import com.pratti.pesquisa.model.KeyModel;
+import com.pratti.pesquisa.model.QuestionModel;
+import com.pratti.pesquisa.model.QuizModel;
+import com.pratti.pesquisa.model.SuperiorModel;
 import com.pratti.pesquisa.service.KeyService;
 import java.util.List;
 import java.util.Optional;
@@ -56,10 +59,18 @@ public class KeyController {
     @PostMapping("/key")
     public ResponseEntity<Object> createAccessKey(@RequestBody @Validated KeyDto keyDto) {
         var accessKey = new KeyModel();
-       
-        accessKey.setKey_access(generateKey());
+        var superiorModel = new SuperiorModel();
+        var quizModel = new QuizModel();
         
+        quizModel.setId(keyDto.getIdQuiz());
+        superiorModel.setId(keyDto.getIdSuperior());
+        
+        accessKey.setKey_access(generateKey());
+        accessKey.setQuiz(quizModel);
+        accessKey.setSuperior(superiorModel);
+
         BeanUtils.copyProperties(keyDto, accessKey);
+   
         return ResponseEntity.status(HttpStatus.CREATED).body(keyService.save(accessKey));
     }
     
