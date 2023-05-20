@@ -4,6 +4,7 @@
  */
 package com.pratti.pesquisa.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +27,9 @@ public class KeyModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     
+    @Column(nullable = false)
+    private String key_access;
+    
     @ManyToOne
     @JoinColumn(name = "id_superior")
     private SuperiorModel superior;
@@ -33,5 +37,52 @@ public class KeyModel {
     @ManyToOne
     @JoinColumn(name = "id_quiz")
     private QuizModel quiz;
+
+    public KeyModel() {
+    }
+
+    public KeyModel(UUID id, String key_access, SuperiorModel superior, QuizModel quiz) {
+        this.id = id;
+        this.key_access = key_access;
+        this.superior = superior;
+        this.quiz = quiz;
+    }
+
+    public String getKey_access() {
+        return key_access;
+    }
+
+    public void setKey_access(String key_access) {
+        this.key_access = key_access;
+    }
+    
+    
+
+    
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public SuperiorModel getSuperior() {
+        return superior;
+    }
+
+    public void setSuperior(SuperiorModel superior) {
+        this.superior = superior;
+    }
+
+    public QuizModel getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(QuizModel quiz) {
+        this.quiz = quiz;
+    }
+    
+    
     
 }

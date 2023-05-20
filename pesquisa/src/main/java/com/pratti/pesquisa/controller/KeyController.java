@@ -9,6 +9,7 @@ import com.pratti.pesquisa.model.KeyModel;
 import com.pratti.pesquisa.service.KeyService;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class KeyController {
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    
     final KeyService keyService;
     
     public KeyController(KeyService keyService) {
@@ -51,13 +54,27 @@ public class KeyController {
     }
     
     @PostMapping("/key")
-    public ResponseEntity<Object> saveUser(@RequestBody @Validated KeyDto keyDto){
+    public ResponseEntity<Object> createAccessKey(@RequestBody @Validated KeyDto keyDto) {
+        var accessKey = new KeyModel();
+       
+        accessKey.setKey_access(generateKey());
         
-        var keyModel = new KeyModel();
-        BeanUtils.copyProperties(keyDto, keyModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(keyService.save(keyModel));
+        BeanUtils.copyProperties(keyDto, accessKey);
+        return ResponseEntity.status(HttpStatus.CREATED).body(keyService.save(accessKey));
     }
     
+    private String generateKey() {
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < 6; i++) {
+            int index = random.nextInt(CHARACTERS.length());
+            sb.append(CHARACTERS.charAt(index));
+        }
+
+        return sb.toString();
+    }
+
     @PutMapping("/key/{id}")
     public ResponseEntity<Object> updateSector(@PathVariable(value ="id") UUID id, @RequestBody @Validated KeyDto keyDto){
         Optional<KeyModel> keyModelOptional = keyService.findById(id);
