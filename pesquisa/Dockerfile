@@ -1,3 +1,14 @@
+FROM maven:3.9-eclipse-temurin-17-alpine as builder
+
+ADD ./pom.xml pom.xml
+ADD ../ ./
+
+# package jar
+RUN mvn install -DskipTests
+
+
+
+
 # Usa uma imagem base do Java
 FROM eclipse-temurin:17.0.7_7-jdk
 
@@ -12,7 +23,7 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 WORKDIR /app
 
 # Copia o arquivo JAR do aplicativo para o contêiner
-COPY target/pesquisa-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder target/*.jar app.jar
 
 # Expõe a porta do aplicativo
 EXPOSE 8080
