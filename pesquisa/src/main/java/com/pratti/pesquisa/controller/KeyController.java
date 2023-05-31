@@ -10,6 +10,7 @@ import com.pratti.pesquisa.model.QuestionModel;
 import com.pratti.pesquisa.model.QuizModel;
 import com.pratti.pesquisa.model.SuperiorModel;
 import com.pratti.pesquisa.service.KeyService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -42,7 +43,7 @@ public class KeyController {
     }
     
     @GetMapping("/key")
-    public ResponseEntity<List<KeyModel>> getAllSectors(){
+    public ResponseEntity<List<KeyModel>> getAllSectors(){       
         return ResponseEntity.status(HttpStatus.OK).body(keyService.findAll());
     }
     
@@ -57,21 +58,30 @@ public class KeyController {
     }
     
     @PostMapping("/key")
-    public ResponseEntity<Object> createAccessKey(@RequestBody @Validated KeyDto keyDto) {
-        var accessKey = new KeyModel();
+    public List<ResponseEntity<KeyModel>> createAccessKey(@RequestBody @Validated KeyDto keyDto) {
         var superiorModel = new SuperiorModel();
         var quizModel = new QuizModel();
         
         quizModel.setId(keyDto.getIdQuiz());
         superiorModel.setId(keyDto.getIdSuperior());
         
-        accessKey.setKey_access(generateKey());
-        accessKey.setQuiz(quizModel);
-        accessKey.setSuperior(superiorModel);
+        List<ResponseEntity<KeyModel>> createdKeys = new ArrayList<>();
+        String[] generatedKeys = new String[keyDto.getNumberOfKeys()];
+        
+        for (int i = 0; i < keyDto.getNumberOfKeys(); i++) {
+            var accessKey = new KeyModel();
+            
+            accessKey.setKey_access(generateKey());
+            accessKey.setQuiz(quizModel);
+            accessKey.setSuperior(superiorModel);
+            accessKey.setStatus(true);
 
-        BeanUtils.copyProperties(keyDto, accessKey);
-   
-        return ResponseEntity.status(HttpStatus.CREATED).body(keyService.save(accessKey));
+            BeanUtils.copyProperties(keyDto, accessKey);
+            ResponseEntity<KeyModel> key = ResponseEntity.status(HttpStatus.CREATED).body(keyService.save(accessKey));
+            
+            createdKeys.add(key);
+        }
+        return createdKeys;
     }
     
     private String generateKey() {
@@ -87,13 +97,14 @@ public class KeyController {
     }
 
     @PutMapping("/key/{id}")
-    public ResponseEntity<Object> updateSector(@PathVariable(value ="id") UUID id, @RequestBody @Validated KeyDto keyDto){
+    public ResponseEntity<Object> updateSector(@PathVariable(value ="id") UUID id){
         Optional<KeyModel> keyModelOptional = keyService.findById(id);
         if(!keyModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Key not found");
         }
-    
+        
         var keyModel = keyModelOptional.get();
+        keyModel.setStatus(false);
 
         return ResponseEntity.status(HttpStatus.OK).body(keyService.save(keyModel));
     }

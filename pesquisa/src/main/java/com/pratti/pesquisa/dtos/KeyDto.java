@@ -11,32 +11,17 @@ import java.util.UUID;
  * @author Roger
  */
 public class KeyDto {
-    private UUID id;
-    private String key;
     private UUID idSuperior;
     private UUID idQuiz;
+    private int numberOfKeys;
 
-    public KeyDto(UUID id, String key, UUID idSuperior, UUID idQuiz) {
-        this.id = id;
-        this.key = key;
-        this.idSuperior = idSuperior;
-        this.idQuiz = idQuiz;
-    }
-  
-    public String getKey() {
-        return key;
+
+    public int getNumberOfKeys() {
+        return numberOfKeys;
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
+    public void setNumberOfKeys(int numberOfKeys) {
+        this.numberOfKeys = numberOfKeys;
     }
 
     public UUID getIdSuperior() {

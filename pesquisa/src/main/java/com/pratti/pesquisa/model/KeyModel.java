@@ -30,6 +30,9 @@ public class KeyModel {
     @Column(nullable = false)
     private String key_access;
     
+    @Column(nullable = false)
+    private boolean status;
+    
     @ManyToOne
     @JoinColumn(name = "id_superior")
     private SuperiorModel superior;
@@ -55,9 +58,14 @@ public class KeyModel {
     public void setKey_access(String key_access) {
         this.key_access = key_access;
     }
-    
-    
 
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
     
     public UUID getId() {
         return id;
