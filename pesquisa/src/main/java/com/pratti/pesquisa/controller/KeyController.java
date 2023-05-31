@@ -66,7 +66,6 @@ public class KeyController {
         superiorModel.setId(keyDto.getIdSuperior());
         
         List<ResponseEntity<KeyModel>> createdKeys = new ArrayList<>();
-        String[] generatedKeys = new String[keyDto.getNumberOfKeys()];
         
         for (int i = 0; i < keyDto.getNumberOfKeys(); i++) {
             var accessKey = new KeyModel();
