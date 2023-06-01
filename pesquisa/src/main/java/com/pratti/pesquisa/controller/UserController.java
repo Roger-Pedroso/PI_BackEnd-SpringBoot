@@ -95,11 +95,7 @@ public class UserController {
             userModel.setRamal(userDto.getRamal());
         }
         
-        if(userDto.getSenha() != null) {
-            userModel.setSenha(userDto.getSenha());
-        }
-        
-        return ResponseEntity.status(HttpStatus.OK).body(userService.save(userModel));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.update(userModel));
     }
 
     @PostMapping("/login/adm")
@@ -107,5 +103,19 @@ public class UserController {
         LoginMessage loginMessage = userService.loginMessage(loginDto);
 
         return ResponseEntity.ok(loginMessage);
+    }
+    
+    @PutMapping("/user/change-password/{id}")
+    public ResponseEntity<Object> loginUser(@PathVariable(value ="id") UUID id, @RequestBody @Validated UserDto userDto){
+        Optional<UserModel> userModelOptional = userService.findById(id);
+        if(!userModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        
+        var userModel = userModelOptional.get();
+        
+        userModel.setSenha(userDto.getSenha());
+        
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updatePassword(userModel));
     }
 }

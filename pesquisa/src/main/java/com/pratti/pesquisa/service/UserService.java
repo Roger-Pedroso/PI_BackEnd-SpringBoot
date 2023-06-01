@@ -35,11 +35,21 @@ public class UserService {
         return new BCryptPasswordEncoder();
     }
 
-    
     public UserModel save(UserModel userModel){
         
         userModel.setSenha(passwordEncoder().encode(userModel.getSenha()));
+  
+        return userRepository.save(userModel);
+    }
+    
+    public UserModel updatePassword(UserModel userModel){
         
+        userModel.setSenha(passwordEncoder().encode(userModel.getSenha()));
+  
+        return userRepository.save(userModel);
+    }
+    
+    public UserModel update(UserModel userModel){
         return userRepository.save(userModel);
     }
     
