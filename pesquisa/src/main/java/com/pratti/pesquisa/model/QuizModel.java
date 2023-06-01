@@ -27,7 +27,7 @@ import java.util.UUID;
  * @author Roger
  */
 @Entity
-@Table(name = "questionario")
+@Table(name = "quizzes")
 public class QuizModel {
     private static final Long serialVersionUID = 1L;
     
@@ -42,7 +42,7 @@ public class QuizModel {
     @NotNull
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "QuestaoQuestionario",
+            name = "QuestionQuizzes",
             joinColumns = @JoinColumn(name = "id_questionario", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_questao", referencedColumnName = "id"))
     @Column(nullable = false)

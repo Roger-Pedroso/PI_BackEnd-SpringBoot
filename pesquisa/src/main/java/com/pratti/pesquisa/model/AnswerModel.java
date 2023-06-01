@@ -19,7 +19,7 @@ import java.util.UUID;
  * @author Roger
  */
 @Entity
-@Table(name = "resposta")
+@Table(name = "answers")
 public class AnswerModel {
     private static final Long serialVersionUID = 1L;
     
@@ -36,6 +36,17 @@ public class AnswerModel {
     @ManyToOne
     @JoinColumn(name = "id_quiz")
     private QuizModel quiz;
+
+    public AnswerModel(UUID id, String resposta, QuestionModel question, QuizModel quiz) {
+        this.id = id;
+        this.resposta = resposta;
+        this.question = question;
+        this.quiz = quiz;
+    }
+
+    public AnswerModel() {
+   
+    }
 
     public QuizModel getQuiz() {
         return quiz;

@@ -19,7 +19,7 @@ import java.util.UUID;
  * @author Roger
  */
 @Entity
-@Table(name = "superior")
+@Table(name = "superiors")
 public class SuperiorModel {
     private static final Long serialVersionUID = 1L;
     

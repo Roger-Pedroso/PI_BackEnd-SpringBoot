@@ -20,7 +20,7 @@ import java.util.UUID;
  * @author Roger
  */
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserModel implements Serializable {
     private static final Long serialVersionUID = 1L;
     

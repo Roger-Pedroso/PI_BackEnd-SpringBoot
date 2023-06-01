@@ -21,7 +21,7 @@ import java.util.UUID;
  * @author Roger
  */
 @Entity
-@Table(name = "question")
+@Table(name = "questions")
 public class QuestionModel {
     private static final Long serialVersionUID = 1L;
     

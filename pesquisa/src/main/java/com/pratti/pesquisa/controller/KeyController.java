@@ -6,7 +6,6 @@ package com.pratti.pesquisa.controller;
 
 import com.pratti.pesquisa.dtos.KeyDto;
 import com.pratti.pesquisa.model.KeyModel;
-import com.pratti.pesquisa.model.QuestionModel;
 import com.pratti.pesquisa.model.QuizModel;
 import com.pratti.pesquisa.model.SuperiorModel;
 import com.pratti.pesquisa.service.KeyService;
@@ -43,18 +42,18 @@ public class KeyController {
     }
     
     @GetMapping("/key")
-    public ResponseEntity<List<KeyModel>> getAllSectors(){       
+    public ResponseEntity<List<KeyModel>> getAllKeys(){       
         return ResponseEntity.status(HttpStatus.OK).body(keyService.findAll());
     }
     
     @GetMapping("/key/{id}")
-    public ResponseEntity<Object> getOneSector(@PathVariable(value= "id") UUID id){
-        Optional<KeyModel> sectorModelOptional = keyService.findById(id);
-        if(!sectorModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sector not found");
+    public ResponseEntity<Object> getOneKey(@PathVariable(value= "id") UUID id){
+        Optional<KeyModel> keyModelOptional = keyService.findById(id);
+        if(!keyModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Key not found");
         }
         
-        return ResponseEntity.status(HttpStatus.OK).body(sectorModelOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(keyModelOptional.get());
     }
     
     @PostMapping("/key")
@@ -96,7 +95,7 @@ public class KeyController {
     }
 
     @PutMapping("/key/{id}")
-    public ResponseEntity<Object> updateSector(@PathVariable(value ="id") UUID id){
+    public ResponseEntity<Object> updateKey(@PathVariable(value ="id") UUID id){
         Optional<KeyModel> keyModelOptional = keyService.findById(id);
         if(!keyModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Key not found");

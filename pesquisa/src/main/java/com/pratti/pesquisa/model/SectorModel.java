@@ -18,7 +18,7 @@ import java.util.UUID;
  * @author Roger
  */
 @Entity
-@Table(name = "sector")
+@Table(name = "sectors")
 public class SectorModel implements Serializable{
     private static final Long serialVersionUID = 1L;
     
