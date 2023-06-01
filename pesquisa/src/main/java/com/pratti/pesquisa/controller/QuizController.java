@@ -4,19 +4,16 @@
  */
 package com.pratti.pesquisa.controller;
 
-import com.pratti.pesquisa.dtos.QuestionDto;
 import com.pratti.pesquisa.dtos.QuizDto;
 import com.pratti.pesquisa.model.QuestionModel;
 import com.pratti.pesquisa.model.QuizModel;
 import com.pratti.pesquisa.service.QuestionService;
 import com.pratti.pesquisa.service.QuizService;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -80,9 +77,7 @@ public class QuizController {
         quizModel.setNome(quizDto.getNome());
         quizModel.setDescricao(quizDto.getDescricao());
         quizModel.setQuestions(questions);
-        
-    
-        
+        quizModel.setStatus(false);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(quizService.save(quizModel));
     }
@@ -107,6 +102,20 @@ public class QuizController {
         // if (quizDto.getQuestions()!= null) {
         //     quizModel.setQuestions(quizDto.getQuestions());
         // }
+        
+        return ResponseEntity.status(HttpStatus.OK).body(quizService.save(quizModel));
+    }
+    
+    @PutMapping("/status-quiz/{id}")
+    public ResponseEntity<Object> updateQuizStatus(@PathVariable(value ="id") UUID id, @RequestBody @Validated QuizDto quizDto){
+        Optional<QuizModel> quizModelOptional = quizService.findById(id);
+        if(!quizModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Quiz not found");
+        }
+        
+        var quizModel = quizModelOptional.get();
+        
+        quizModel.setStatus(quizDto.isStatus());
         
         return ResponseEntity.status(HttpStatus.OK).body(quizService.save(quizModel));
     }

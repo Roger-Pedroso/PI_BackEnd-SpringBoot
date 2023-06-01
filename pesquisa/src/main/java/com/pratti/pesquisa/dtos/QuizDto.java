@@ -18,7 +18,16 @@ public class QuizDto {
     private String nome;
     private String descricao;
     private Set<UUID> questions;
+    private boolean status;
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
     public String getNome() {
         return nome;
     }

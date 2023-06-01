@@ -38,6 +38,8 @@ public class QuizModel {
     private String nome;
     @Column(nullable = false)
     private String descricao;
+    @Column(nullable = false)
+    private boolean status;
     
     @NotNull
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -53,6 +55,22 @@ public class QuizModel {
     @JoinColumn(name = "id_user")
     private UserModel user;
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
+    
     public Set<QuestionModel> getQuestions() {
         return questions;
     }
