@@ -28,7 +28,7 @@ public class KeyModel {
     private UUID id;
     
     @Column(nullable = false)
-    private String key_access;
+    private String keyAccess;
     
     @Column(nullable = false)
     private boolean status;
@@ -44,19 +44,20 @@ public class KeyModel {
     public KeyModel() {
     }
 
-    public KeyModel(UUID id, String key_access, SuperiorModel superior, QuizModel quiz) {
+    public KeyModel(UUID id, String keyAccess, boolean status, SuperiorModel superior, QuizModel quiz) {
         this.id = id;
-        this.key_access = key_access;
+        this.keyAccess = keyAccess;
+        this.status = status;
         this.superior = superior;
         this.quiz = quiz;
     }
 
-    public String getKey_access() {
-        return key_access;
+    public String getKeyAccess() {
+        return keyAccess;
     }
 
-    public void setKey_access(String key_access) {
-        this.key_access = key_access;
+    public void setKeyAccess(String keyAccess) {
+        this.keyAccess = keyAccess;
     }
 
     public boolean getStatus() {

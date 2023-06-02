@@ -31,6 +31,10 @@ public class KeyService {
         return keyRepository.findById(id);
     }
     
+    public Optional<KeyModel> findByKeyAccess(String keyAccess){
+        return keyRepository.findBykeyAccess(keyAccess);
+    }
+    
     public KeyModel save(KeyModel keyModel){
         return keyRepository.save(keyModel);
     }

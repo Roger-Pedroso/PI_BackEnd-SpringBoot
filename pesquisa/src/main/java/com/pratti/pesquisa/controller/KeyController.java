@@ -46,9 +46,9 @@ public class KeyController {
         return ResponseEntity.status(HttpStatus.OK).body(keyService.findAll());
     }
     
-    @GetMapping("/key/{id}")
-    public ResponseEntity<Object> getOneKey(@PathVariable(value= "id") UUID id){
-        Optional<KeyModel> keyModelOptional = keyService.findById(id);
+    @GetMapping("/key/{keyAccess}")
+    public ResponseEntity<Object> getOneKey(@PathVariable(value= "keyAccess") String keyAccess){
+        Optional<KeyModel> keyModelOptional = keyService.findByKeyAccess(keyAccess);
         if(!keyModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Key not found");
         }
@@ -69,7 +69,7 @@ public class KeyController {
         for (int i = 0; i < keyDto.getNumberOfKeys(); i++) {
             var accessKey = new KeyModel();
             
-            accessKey.setKey_access(generateKey());
+            accessKey.setKeyAccess(generateKey());
             accessKey.setQuiz(quizModel);
             accessKey.setSuperior(superiorModel);
             accessKey.setStatus(true);
