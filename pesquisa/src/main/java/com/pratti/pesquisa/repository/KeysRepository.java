@@ -5,6 +5,7 @@
 package com.pratti.pesquisa.repository;
 
 import com.pratti.pesquisa.model.KeyModel;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface KeysRepository extends JpaRepository<KeyModel, UUID>{
     Optional<KeyModel> findBykeyAccess(String keyAccess);
+    List<KeyModel> findByQuizId(UUID idQuiz);
 }

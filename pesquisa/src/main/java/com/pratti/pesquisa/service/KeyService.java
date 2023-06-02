@@ -5,6 +5,7 @@
 package com.pratti.pesquisa.service;
 
 import com.pratti.pesquisa.model.KeyModel;
+import com.pratti.pesquisa.model.QuizModel;
 import com.pratti.pesquisa.repository.KeysRepository;
 import java.util.List;
 import java.util.Optional;
@@ -38,5 +39,10 @@ public class KeyService {
     public KeyModel save(KeyModel keyModel){
         return keyRepository.save(keyModel);
     }
+    
+    public List<KeyModel> findByQuizId(UUID idQuiz){
+        return keyRepository.findByQuizId(idQuiz);
+    }
+    
 
 }

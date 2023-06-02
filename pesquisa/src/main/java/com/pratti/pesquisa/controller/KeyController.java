@@ -106,4 +106,10 @@ public class KeyController {
 
         return ResponseEntity.status(HttpStatus.OK).body(keyService.save(keyModel));
     }
+    
+    @GetMapping("/key-by-quiz/{idQuiz}")
+    public ResponseEntity<List<KeyModel>> getKeysByQuiz(@PathVariable(value= "idQuiz") UUID idQuiz){
+  
+        return ResponseEntity.status(HttpStatus.OK).body(keyService.findByQuizId(idQuiz));
+    }
 }
