@@ -74,6 +74,63 @@ public class UserController {
         }
         
         var userModel = userModelOptional.get();
+        
+        if(userDto.getCracha() != null){
+            userModel.setCracha(userDto.getCracha());
+        }
+        
+        if (userDto.getEmail() != null) {
+            userModel.setEmail(userDto.getEmail());
+        }
+        
+        if (userDto.getNascimento() != null) {
+            userModel.setNascimento(userDto.getNascimento());
+        }
+        
+        if (userDto.getNome() != null) {
+            userModel.setNome(userDto.getNome());
+        }
+       
+        if (userDto.getRamal() != null) {
+            userModel.setRamal(userDto.getRamal());
+        }
+        
+        return ResponseEntity.status(HttpStatus.OK).body(userService.update(userModel));
+    }
+
+    @PostMapping("/login/adm")
+    public ResponseEntity<?> loginUser(@RequestBody LoginDto loginDto){
+        LoginMessage loginMessage = userService.loginMessage(loginDto);
+
+        return ResponseEntity.ok(loginMessage);
+    }
+    
+    @PutMapping("/user/change-password/{id}")
+    public ResponseEntity<Object> loginUser(@PathVariable(value ="id") UUID id, @RequestBody @Validated UserDto userDto){
+      Optional<UserModel> userModelOptional = userService.findById(id);
+        if(!userModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        
+        var userModel = userModelOptional.get();
+        
+        userModel.setSenha(userDto.getSenha());
+        
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updatePassword(userModel));
+    }
+    
+    @PutMapping("/user/{id}")
+    public ResponseEntity<Object> updateUser(@PathVariable(value ="id") UUID id, @RequestBody @Validated UserDto userDto){
+        Optional<UserModel> userModelOptional = userService.findById(id);
+        if(!userModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        
+        var userModel = userModelOptional.get();
+        
+        userModel.setSenha(userDto.getSenha());
+        
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updatePassword(userModel));
         userModel.setCracha(userDto.getCracha());
         userModel.setEmail(userDto.getEmail());
         userModel.setNascimento(userDto.getNascimento());

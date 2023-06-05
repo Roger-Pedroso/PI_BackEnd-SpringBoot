@@ -35,11 +35,22 @@ public class UserService {
         return new BCryptPasswordEncoder();
     }
 
-    
     public UserModel save(UserModel userModel){
         
         userModel.setSenha(passwordEncoder().encode(userModel.getSenha()));
+  
+        return userRepository.save(userModel);
+    }
+    
+    public UserModel updatePassword(UserModel userModel){
         
+        userModel.setSenha(passwordEncoder().encode(userModel.getSenha()));
+  
+        return userRepository.save(userModel);
+    }
+    
+    public UserModel update(UserModel userModel){
+
         return userRepository.save(userModel);
     }
     
@@ -50,11 +61,20 @@ public class UserService {
     public boolean existsByCracha(String cracha){
         return userRepository.existsByCracha(cracha);
     }
+    
+    public boolean existsByEmail(String email){
+        return userRepository.existsByEmail(email);
+    }
+
 
     public Optional<UserModel> findByCracha(String cracha){
         return userRepository.findByCracha(cracha);
     }
     
+    public Optional<UserModel> findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     public Optional<UserModel> findById(UUID id){
         return userRepository.findById(id);
     }
@@ -63,10 +83,15 @@ public class UserService {
         return userRepository.findOneByCrachaAndSenha(cracha, senha);
     }
     
+    public Optional<UserModel> findOneByEmailAndSenha(String email, String senha){
+        return userRepository.findOneByEmailAndSenha(email, senha);
+    }
+    
     public LoginMessage loginMessage(LoginDto loginDto){
         String msg = null;
 
-        Optional<UserModel> userModel1 = userRepository.findByCracha(loginDto.getCracha());
+        Optional<UserModel> userModel1 = userRepository.findByEmail(loginDto.getEmail());
+
         if(userModel1.isPresent()) {
             String senha = loginDto.getSenha();
             String senhaEncriptada = userModel1.get().getSenha();
@@ -74,17 +99,19 @@ public class UserService {
             Boolean senhaCorreta = passwordEncoder().matches(senha, senhaEncriptada);
 
             if(senhaCorreta){
-                Optional<UserModel> userModel2 = userRepository.findOneByCrachaAndSenha(loginDto.getCracha(), userModel1.get().getSenha());
+
+                Optional<UserModel> userModel2 = userRepository.findOneByEmailAndSenha(loginDto.getEmail(), userModel1.get().getSenha());
                 if(userModel2.isPresent()){
-                    return new LoginMessage("login success", true);
+                    return new LoginMessage("Logado com Sucesso", true, userModel2.get().getId().toString());
                 }else {
-                    return new LoginMessage("login failed", false);
+                    return new LoginMessage("Falha ao Logar", false);
                 }
             } else {
-                return new LoginMessage("password not match", false);
+                return new LoginMessage("Senha incorreta", false);
             }
         }else {
-            return new LoginMessage("cracha not exist", false);
+            return new LoginMessage("Email  incorreto", false);
+
         }
     }
 }
