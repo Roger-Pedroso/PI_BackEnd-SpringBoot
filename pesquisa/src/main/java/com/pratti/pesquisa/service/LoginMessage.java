@@ -4,7 +4,7 @@ public class LoginMessage {
     String message;
     Boolean status;
     String userId;
-    
+  
     public String getMessage() {
         return message;
     }
@@ -17,7 +17,7 @@ public class LoginMessage {
     public void setStatus(Boolean status) {
         this.status = status;
     }
-      public String getUserId() {
+     public String getUserId() {
         return userId;
     }
 

@@ -6,6 +6,7 @@ public class LoginDto {
     
     private UUID id;
     private String email;
+    private String cracha;
     private String senha;
 
     public UUID getId() {
@@ -20,12 +21,20 @@ public class LoginDto {
         this.email = email;
     }
     
+    public String getCracha() {
+        return cracha;
+    }
+    public void setCracha(String cracha) {
+        this.cracha = cracha;
+    }
+
     public String getSenha() {
         return senha;
     }
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
     public LoginDto(String email, String senha) {
         this.email = email;
         this.senha = senha;

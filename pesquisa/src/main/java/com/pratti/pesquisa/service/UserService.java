@@ -50,6 +50,7 @@ public class UserService {
     }
     
     public UserModel update(UserModel userModel){
+
         return userRepository.save(userModel);
     }
     
@@ -65,6 +66,7 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
+
     public Optional<UserModel> findByCracha(String cracha){
         return userRepository.findByCracha(cracha);
     }
@@ -72,7 +74,7 @@ public class UserService {
     public Optional<UserModel> findByEmail(String email){
         return userRepository.findByEmail(email);
     }
-    
+
     public Optional<UserModel> findById(UUID id){
         return userRepository.findById(id);
     }
@@ -89,6 +91,7 @@ public class UserService {
         String msg = null;
 
         Optional<UserModel> userModel1 = userRepository.findByEmail(loginDto.getEmail());
+
         if(userModel1.isPresent()) {
             String senha = loginDto.getSenha();
             String senhaEncriptada = userModel1.get().getSenha();
@@ -96,6 +99,7 @@ public class UserService {
             Boolean senhaCorreta = passwordEncoder().matches(senha, senhaEncriptada);
 
             if(senhaCorreta){
+
                 Optional<UserModel> userModel2 = userRepository.findOneByEmailAndSenha(loginDto.getEmail(), userModel1.get().getSenha());
                 if(userModel2.isPresent()){
                     return new LoginMessage("Logado com Sucesso", true, userModel2.get().getId().toString());
@@ -107,6 +111,7 @@ public class UserService {
             }
         }else {
             return new LoginMessage("Email  incorreto", false);
+
         }
     }
 }
