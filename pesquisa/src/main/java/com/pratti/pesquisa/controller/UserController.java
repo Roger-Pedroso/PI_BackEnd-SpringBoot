@@ -118,33 +118,4 @@ public class UserController {
         
         return ResponseEntity.status(HttpStatus.OK).body(userService.updatePassword(userModel));
     }
-    
-    @PutMapping("/user/{id}")
-    public ResponseEntity<Object> updateUser(@PathVariable(value ="id") UUID id, @RequestBody @Validated UserDto userDto){
-        Optional<UserModel> userModelOptional = userService.findById(id);
-        if(!userModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
-        
-        var userModel = userModelOptional.get();
-        
-        userModel.setSenha(userDto.getSenha());
-        
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updatePassword(userModel));
-        userModel.setCracha(userDto.getCracha());
-        userModel.setEmail(userDto.getEmail());
-        userModel.setNascimento(userDto.getNascimento());
-        userModel.setNome(userDto.getNome());
-        userModel.setRamal(userDto.getRamal());
-        userModel.setSenha(userDto.getSenha());
-        
-        return ResponseEntity.status(HttpStatus.OK).body(userService.save(userModel));
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginDto loginDto){
-        LoginMessage loginMessage = userService.loginMessage(loginDto);
-
-        return ResponseEntity.ok(loginMessage);
-    }
 }
