@@ -40,7 +40,7 @@ public class QuizService {
         return quizRepository.save(quizModel);
     }
     
-    public List<QuizModel> getQuizzesReport(UUID id) {
-        return quizRepository.buscarRespotas(id);
+    public List<Object> getQuizzesReport(UUID id) {
+        return quizRepository.buscarRespostas(id);
     }
 }

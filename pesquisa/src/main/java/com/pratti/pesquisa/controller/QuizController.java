@@ -121,7 +121,7 @@ public class QuizController {
     }
  
     @GetMapping("/relatorio/{id}")
-    public List getQuizzesReportById(@PathVariable UUID id) {
+    public List<Object> getQuizzesReportById(@PathVariable(value ="id") UUID id) {
         return quizService.getQuizzesReport(id);
     }
 }
