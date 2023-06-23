@@ -39,4 +39,8 @@ public class QuizService {
         /*return entityManager.merge(questionModel);*/
         return quizRepository.save(quizModel);
     }
+    
+    public List<QuizModel> getQuizzesReport(UUID id) {
+        return quizRepository.buscarRespotas(id);
+    }
 }

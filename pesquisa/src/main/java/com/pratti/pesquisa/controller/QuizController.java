@@ -44,7 +44,7 @@ public class QuizController {
     public ResponseEntity<List<QuizModel>> getAllQuizes(){
         return ResponseEntity.status(HttpStatus.OK).body(quizService.findAll());
     }
-    
+        
     @GetMapping("/quiz/{id}")
     public ResponseEntity<Object> getOneQuiz(@PathVariable(value= "id") UUID id){
         Optional<QuizModel> quizModelOptional = quizService.findById(id);
@@ -119,5 +119,9 @@ public class QuizController {
         
         return ResponseEntity.status(HttpStatus.OK).body(quizService.save(quizModel));
     }
-
+ 
+    @GetMapping("/relatorio/{id}")
+    public List getQuizzesReportById(@PathVariable UUID id) {
+        return quizService.getQuizzesReport(id);
+    }
 }
