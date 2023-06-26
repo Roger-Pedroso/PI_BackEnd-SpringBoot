@@ -19,7 +19,7 @@ public interface QuizRepository extends JpaRepository<QuizModel, UUID> {
 
     boolean existsByDescricao(String descricao);
     
-    @Query(value = "SELECT a.resposta, COUNT(*) AS quantidade, q.id, q.nome FROM answers AS a JOIN questions AS q ON q.id = a.id_question JOIN quizzes as quiz on quiz.id = a.id_quiz WHERE q.tipo = 'alternativa' and quiz.id = :X GROUP BY a.resposta;", nativeQuery = true)
+    @Query(value = "SELECT a.resposta, COUNT(*) AS quantidade, q.id, q.nome_campo FROM answers AS a JOIN questions AS q ON q.id = a.id_question JOIN quizzes as quiz on quiz.id = a.id_quiz WHERE q.tipo = 'alternativa' and quiz.id = :X GROUP BY a.resposta;", nativeQuery = true)
     List<Object> buscarRespostas(@Param("X")UUID id);
     
 }
