@@ -124,4 +124,9 @@ public class QuizController {
     public List<Object> getQuizzesReportById(@PathVariable(value ="id") UUID id) {
         return quizService.getQuizzesReport(id);
     }
+    
+    @GetMapping("/relatorio-completo/{id}")
+    public List<Object> getQuizzesAnswersById(@PathVariable(value ="id") UUID id) {
+        return quizService.getQuizzesAnswers(id);
+    }
 }

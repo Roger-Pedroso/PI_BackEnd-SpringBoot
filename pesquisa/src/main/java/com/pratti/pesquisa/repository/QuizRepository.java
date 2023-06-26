@@ -22,4 +22,21 @@ public interface QuizRepository extends JpaRepository<QuizModel, UUID> {
     @Query(value = "SELECT a.resposta, COUNT(*) AS quantidade, q.id, q.nome_campo FROM answers AS a JOIN questions AS q ON q.id = a.id_question JOIN quizzes as quiz on quiz.id = a.id_quiz WHERE q.tipo = 'alternativa' and quiz.id = :X GROUP BY a.resposta, q.id, q.nome_campo;", nativeQuery = true)
     List<Object> buscarRespostas(@Param("X")UUID id);
     
+    @Query(value = "SELECT JSON_ARRAYAGG(\n" +
+                    "    JSON_OBJECT(\n" +
+                    "        'resposta', resposta,\n" +
+                    "        'q.tipo', tipo,\n" +
+                    "        'id', id,\n" +
+                    "        'nome_campo', nome_campo\n" +
+                    "    )\n" +
+                    ") AS resultado\n" +
+                    "FROM (\n" +
+                    "    SELECT a.resposta, q.id, q.nome_campo, q.tipo\n" +
+                    "         FROM answers AS a\n" +
+                    "                        JOIN questions AS q ON q.id = a.id_question\n" +
+                    "                        JOIN quizzes AS quiz ON quiz.id = a.id_quiz\n" +
+                    "                        where quiz.id =  :X\n" +
+                    "                        GROUP BY a.resposta, q.id, q.nome_campo, q.tipo\n" +
+                    ") AS subquery;", nativeQuery = true)  
+    List<Object> buscarRepostasQuestionario(@Param("X")UUID id);
 }

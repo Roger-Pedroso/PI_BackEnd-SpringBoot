@@ -43,4 +43,8 @@ public class QuizService {
     public List<Object> getQuizzesReport(UUID id) {
         return quizRepository.buscarRespostas(id);
     }
+    
+    public List<Object> getQuizzesAnswers(UUID id) {
+        return quizRepository.buscarRepostasQuestionario(id);
+    }
 }
