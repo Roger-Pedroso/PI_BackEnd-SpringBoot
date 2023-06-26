@@ -120,7 +120,7 @@ public class QuizController {
         return ResponseEntity.status(HttpStatus.OK).body(quizService.save(quizModel));
     }
  
-    @GetMapping("/relatorio/{id}")
+    @GetMapping("/relatorio-alternativas/{id}")
     public List<Object> getQuizzesReportById(@PathVariable(value ="id") UUID id) {
         return quizService.getQuizzesReport(id);
     }
