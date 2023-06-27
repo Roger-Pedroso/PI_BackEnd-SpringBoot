@@ -25,7 +25,7 @@ public interface QuizRepository extends JpaRepository<QuizModel, UUID> {
     @Query(value = "SELECT JSON_ARRAYAGG(\n" +
                     "    JSON_OBJECT(\n" +
                     "        'resposta', resposta,\n" +
-                    "        'q.tipo', tipo,\n" +
+                    "        'tipo', tipo,\n" +
                     "        'id', id,\n" +
                     "        'nome_campo', nome_campo\n" +
                     "    )\n" +
